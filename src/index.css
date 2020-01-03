@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.react-phone-number-input__icon-image {
+  display: block;
+}
+.react-phone-number-input__phone {
+  height: calc(0.3rem * 5) !important;
+  border: 0 !important;
+}
