@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import logo from '../logo.svg'
-import { Form, Icon, Input, Button, Checkbox, Row, Col, message } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, Row, Col, message, Typography, Divider } from 'antd';
 import { Link, useLocation, useHistory } from "react-router-dom";
-import { useFirebase, isEmpty, isLoaded } from 'react-redux-firebase'
-import { useSelector } from 'react-redux'
-import routeNames from '../constants/routeNames'
+import { useFirebase, isEmpty, isLoaded } from 'react-redux-firebase';
+import { useSelector } from 'react-redux';
+import routeNames from '../constants/routeNames';
+import { FaChurch } from 'react-icons/fa';
+
+const { Title } = Typography;
 
 function LoginForm(props) {
     const { getFieldDecorator } = props.form;
@@ -58,6 +61,9 @@ function LoginForm(props) {
             </Row>
             <Row type="flex" justify="center" align="top">
                 <Col lg={10} md={10} sm={20} xs={20}>
+
+                    <Title style={{ textAlign: 'center' }} level={4}><FaChurch size={20} /> Área do Intercessor</Title>
+                    <Divider />
                     <Form onSubmit={handleSubmit} className="login-form">
                         <Form.Item label="Email">
                             {getFieldDecorator('email', {
