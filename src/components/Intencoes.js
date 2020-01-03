@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Card, List, Tooltip, Col, Row, Badge, Layout, Spin, Statistic, Icon, Typography, Button, PageHeader, Input, Alert, Empty, Divider } from 'antd';
+import { Card, List, Tooltip, Col, Row, Badge, Layout, Spin, Statistic, Icon, Typography, Button, PageHeader, Input, Alert, Empty, Divider, Modal } from 'antd';
 import { Offline, Online } from "react-detect-offline";
 //import ExtraLinks from '../common/ExtraLinks';
 import { useSelector } from 'react-redux'
 import { useFirestoreConnect, useFirestore, useFirebase } from 'react-redux-firebase'
 import moment from 'moment';
 import momentPTBR from '../constants/momentPTBR';
-import { FaChurch, FaPray, FaMicrophone, FaStop, FaPen } from 'react-icons/fa';
+import { FaChurch, FaPray, FaMicrophone, FaStop, FaPen, FaCross } from 'react-icons/fa';
 import ModalComentario from './ModalComentario';
 
 
@@ -15,6 +15,8 @@ function Intencoes() {
     const [comentarios, setComentarios] = useState([]);
     const [intencao, setIntencao] = useState({});
     const [visible, setVisible] = useState(false);
+    const [visibleTestemunho, setVisibleTestemunho] = useState(false);
+    const [testemunho, setTestemunho] = useState({});
 
     useFirestoreConnect(() => [
         { collection: 'intencoes', orderBy: [['createdAt', 'desc']] },
@@ -46,18 +48,27 @@ function Intencoes() {
         setVisible(true);
     }
 
+    const abrirModalTestemunho = (intencao) => {
+        if (intencao.testemunho) {
+            setVisibleTestemunho(true);
+            setTestemunho(intencao.testemunho);
+        }
+    }
+
     const getTotal = () => {
         let comentariosTotal = 0;
         let oracoesTotal = 0;
+        let testemunhosTotal = 0;
         if (intencoes) {
             intencoes.map(item => { comentariosTotal += item.comentarios.length; });
             intencoes.map(item => { oracoesTotal += item.oracoes.length; });
+            intencoes.map(item => { if (item.testemunho) testemunhosTotal += 1; });
         }
         return {
             intencoesTotal: intencoes && intencoes.length,
             oracoesTotal,
             comentariosTotal,
-            testemunhosTotal: 0
+            testemunhosTotal
         };
     }
 
@@ -75,13 +86,13 @@ function Intencoes() {
                             <Statistic title="Intenções" value={getTotal().intencoesTotal} />
                         </Col>
                         <Col span={6}>
-                            <Statistic title="Orações Realizadas" value={getTotal().oracoesTotal} />
+                            <Statistic title="Intercessores" value={getTotal().oracoesTotal} />
                         </Col>
                         <Col span={6}>
-                            <Statistic title="Comentários" value={getTotal().comentariosTotal} />
+                            <Statistic title="Mensagens" value={getTotal().comentariosTotal} />
                         </Col>
                         <Col span={6}>
-                            <Statistic title="Testemunhos" value={getTotal.testemunhosTotal} />
+                            <Statistic title="Testemunhos" value={getTotal().testemunhosTotal} />
                         </Col>
                     </Row>
                     <br />
@@ -119,6 +130,11 @@ function Intencoes() {
                                             <Badge count={intencao.comentarios && intencao.comentarios.length} style={{ marginTop: '-7px' }} />
                                         </Button>
                                     </Tooltip>,
+                                    <Tooltip title="Deixar uma mensagem">
+                                        <Button disabled={!intencao.testemunho} onClick={() => abrirModalTestemunho(intencao)} type="link">
+                                            <FaCross size="16" />
+                                        </Button>
+                                    </Tooltip>,
                                 ]}>
                                     <p>{intencao.content}</p>
                                     <p style={{ color: '#666666' }}>{intencao.city}-{intencao.regionCode}, {intencao.country}</p>
@@ -129,7 +145,16 @@ function Intencoes() {
                     />
                 </Spin>
                 <ModalComentario intencao={intencao} comentarios={comentarios} visible={visible} setVisible={setVisible} />
-            </Online >
+                <Modal
+                    title="Testemunho"
+                    visible={visibleTestemunho}
+                    onCancel={() => setVisibleTestemunho(false)}
+                    footer={null}
+                >
+                    <p>{testemunho.content}</p>
+                    <small>{moment(testemunho.createdAt && testemunho.createdAt).fromNow()}</small>
+                </Modal>
+        </Online >
         </>
     )
 
