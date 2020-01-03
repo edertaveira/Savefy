@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, List, Tooltip, Col, Row, Badge, Layout, Statistic, Icon, Typography, Button, PageHeader, Input, Alert, Empty, Divider } from 'antd';
+import { Card, List, Tooltip, Col, Row, Badge, Layout, Spin, Statistic, Icon, Typography, Button, PageHeader, Input, Alert, Empty, Divider } from 'antd';
 import { Offline, Online } from "react-detect-offline";
 //import ExtraLinks from '../common/ExtraLinks';
 import { useSelector } from 'react-redux'
@@ -69,63 +69,65 @@ function Intencoes() {
                 <br /><br />
             </Offline>
             <Online>
-                <Row gutter={16}>
-                    <Col span={6}>
-                        <Statistic title="Intenções" value={getTotal().intencoesTotal} />
-                    </Col>
-                    <Col span={6}>
-                        <Statistic title="Orações Realizadas" value={getTotal().oracoesTotal} />
-                    </Col>
-                    <Col span={6}>
-                        <Statistic title="Comentários" value={getTotal().comentariosTotal} />
-                    </Col>
-                    <Col span={6}>
-                        <Statistic title="Testemunhos" value={getTotal.testemunhosTotal} />
-                    </Col>
-                </Row>
-                <br />
-                <Divider />
-                <br />
+                <Spin spinning={!intencoes} tip="Carregando Intenções...">
+                    <Row gutter={16}>
+                        <Col span={6}>
+                            <Statistic title="Intenções" value={getTotal().intencoesTotal} />
+                        </Col>
+                        <Col span={6}>
+                            <Statistic title="Orações Realizadas" value={getTotal().oracoesTotal} />
+                        </Col>
+                        <Col span={6}>
+                            <Statistic title="Comentários" value={getTotal().comentariosTotal} />
+                        </Col>
+                        <Col span={6}>
+                            <Statistic title="Testemunhos" value={getTotal.testemunhosTotal} />
+                        </Col>
+                    </Row>
+                    <br />
+                    <Divider />
+                    <br />
 
-                <List
-                    grid={{
-                        gutter: 16,
-                        xs: 1,
-                        sm: 2,
-                        md: 3,
-                        lg: 3,
-                        xl: 4,
-                        xxl: 3,
-                    }}
-                    locale={{
-                        emptyText: <Empty description="Nenhuma Intenção encontrada" />
-                    }}
-                    dataSource={intencoes}
-                    renderItem={intencao => {
-                        const rezou = intencao.oracoes && intencao.oracoes.find(value => value === auth.uid)
+                    <List
+                        grid={{
+                            gutter: 16,
+                            xs: 1,
+                            sm: 2,
+                            md: 3,
+                            lg: 3,
+                            xl: 4,
+                            xxl: 3,
+                        }}
+                        locale={{
+                            emptyText: <Empty description="Nenhuma Intenção encontrada" />
+                        }}
+                        dataSource={intencoes}
+                        renderItem={intencao => {
+                            const rezou = intencao.oracoes && intencao.oracoes.find(value => value === auth.uid)
 
-                        return <List.Item key={intencao.id}>
-                            <Card style={rezou ? { background: '#F0FFE4' } : {}} actions={[
-                                <Tooltip title="Rezar!">
-                                    <Button disabled={rezou} onClick={() => rezar(intencao.id)} type="link">
-                                        <FaPray size="16" />
-                                        <Badge count={intencao.oracoes && intencao.oracoes.length} style={{ backgroundColor: '#52c41a', marginTop: '-7px' }} />
-                                    </Button>
-                                </Tooltip>,
-                                <Tooltip title="Deixar uma mensagem">
-                                    <Button onClick={() => abrirModalComentario(intencao)} type="link">
-                                        <FaPen size="16" />
-                                        <Badge count={intencao.comentarios && intencao.comentarios.length} style={{ marginTop: '-7px' }} />
-                                    </Button>
-                                </Tooltip>,
-                            ]}>
-                                <p>{intencao.content}</p>
-                                <p style={{ color: '#666666'}}>{intencao.city}-{intencao.regionCode}, {intencao.country}</p>
-                                <small>{moment(intencao.createdAt.toDate()).fromNow()}</small>
-                            </Card>
-                        </List.Item> 
-                    }}
-                />
+                            return <List.Item key={intencao.id}>
+                                <Card style={rezou ? { background: '#F0FFE4' } : {}} actions={[
+                                    <Tooltip title="Rezar!">
+                                        <Button disabled={rezou} onClick={() => rezar(intencao.id)} type="link">
+                                            <FaPray size="16" />
+                                            <Badge count={intencao.oracoes && intencao.oracoes.length} style={{ backgroundColor: '#52c41a', marginTop: '-7px' }} />
+                                        </Button>
+                                    </Tooltip>,
+                                    <Tooltip title="Deixar uma mensagem">
+                                        <Button onClick={() => abrirModalComentario(intencao)} type="link">
+                                            <FaPen size="16" />
+                                            <Badge count={intencao.comentarios && intencao.comentarios.length} style={{ marginTop: '-7px' }} />
+                                        </Button>
+                                    </Tooltip>,
+                                ]}>
+                                    <p>{intencao.content}</p>
+                                    <p style={{ color: '#666666' }}>{intencao.city}-{intencao.regionCode}, {intencao.country}</p>
+                                    <small>{moment(intencao.createdAt.toDate()).fromNow()}</small>
+                                </Card>
+                            </List.Item>
+                        }}
+                    />
+                </Spin>
                 <ModalComentario intencao={intencao} comentarios={comentarios} visible={visible} setVisible={setVisible} />
             </Online >
         </>
