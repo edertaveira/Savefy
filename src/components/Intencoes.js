@@ -118,7 +118,7 @@ function Intencoes() {
 
                             return <List.Item key={intencao.id}>
                                 <Card style={rezou ? { background: '#F0FFE4' } : {}} actions={[
-                                    <Tooltip title="Rezar!">
+                                    <Tooltip title={rezou ? "Você já Intercedeu!": "Interceder!"}>
                                         <Button disabled={rezou} onClick={() => rezar(intencao.id)} type="link">
                                             <FaPray size="16" />
                                             <Badge count={intencao.oracoes && intencao.oracoes.length} style={{ backgroundColor: '#52c41a', marginTop: '-7px' }} />
