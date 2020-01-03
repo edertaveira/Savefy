@@ -113,7 +113,7 @@ function HomeForm(props) {
                 </Form>
                 <Divider />
                 <div style={{ textAlign: 'center' }}>
-                    {/*<Link style={{ color: '#688e66' }} to='/login'><FaChurch /> Área do Intercessor</Link>*/}
+                    <Link style={{ color: '#688e66' }} to='/login'><FaChurch /> Área do Intercessor</Link>
                     <Button onClick={() => abrirModalRastrarIntencao()} style={{ color: '#a25050' }} type="link"><FaPray /> Rastrear Intenção</Button>
                     <br /><br /><br />
                     <small>AnjoBom 2020</small>

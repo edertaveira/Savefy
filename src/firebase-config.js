@@ -7,14 +7,14 @@ import 'firebase/database'
 import 'firebase/firestore'
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCg1Z-jMknefH0phRsKRh9qnBVUyNOIUS4",
-    authDomain: "anjobom-5eeeb.firebaseapp.com",
-    databaseURL: "https://anjobom-5eeeb.firebaseio.com",
-    projectId: "anjobom-5eeeb",
-    storageBucket: "anjobom-5eeeb.appspot.com",
-    messagingSenderId: "1060000552848",
-    appId: "1:1060000552848:web:cb1f8204a5c3c3ae550515",
-    measurementId: "G-ET4T7EYVM7"
+    apiKey: "AIzaSyCsQiyrcx9SMr9TStzcK713lk_cpJuAf6s",
+    authDomain: "anjobom-10d2b.firebaseapp.com",
+    databaseURL: "https://anjobom-10d2b.firebaseio.com",
+    projectId: "anjobom-10d2b",
+    storageBucket: "anjobom-10d2b.appspot.com",
+    messagingSenderId: "637822282147",
+    appId: "1:637822282147:web:7dc12044bddfb4d07b9216",
+    measurementId: "G-T1PJBEFBN8"
 }; // from Firebase Console
 const rfConfig = {} // optional redux-firestore Config Options
 

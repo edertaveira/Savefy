@@ -81,16 +81,16 @@ function LoginForm(props) {
                             )}
                         </Form.Item>
                         <Form.Item>
-                            <a className="login-form-forgot" href="">
+                            {/*<a className="login-form-forgot" href="">
                                 Esqueci a senha
-                            </a>
+                            </a>*/}
                             <br />
                             <Button type="primary" htmlType="submit"
                                 icon="check"
                                 loading={iconLoading}>
                                 Logar
                             </Button>
-                            <span style={{ marginLeft: 10 }}>ou <Link to="/register">Cadastrar agora!</Link></span>
+                            {/*<span style={{ marginLeft: 10 }}>ou <Link to="/register">Cadastrar agora!</Link></span>*/}
                         </Form.Item>
                     </Form>
                 </Col>
