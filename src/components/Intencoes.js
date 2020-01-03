@@ -130,7 +130,7 @@ function Intencoes() {
                                             <Badge count={intencao.comentarios && intencao.comentarios.length} style={{ marginTop: '-7px' }} />
                                         </Button>
                                     </Tooltip>,
-                                    <Tooltip title="Deixar uma mensagem">
+                                    <Tooltip title="Ver Testemunho">
                                         <Button disabled={!intencao.testemunho} onClick={() => abrirModalTestemunho(intencao)} type="link">
                                             <FaCross size="16" />
                                         </Button>
