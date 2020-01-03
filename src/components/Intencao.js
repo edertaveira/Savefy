@@ -104,7 +104,7 @@ function Intencao(props) {
                         <br /><br />
                         <Alert type="warning" message="Esta intenção não existe." />
                         <br /><br />
-                        <Button onClick={() => abrirModalRastrarIntencao()} style={{ color: '#a25050' }} type="link"><FaPray /> Rastrear Intenção</Button>
+                        <Button onClick={() => abrirModalRastrarIntencao()} style={{ color: '#a25050' }} type="link"><FaPray /> Rastrear outra Intenção</Button>
                     </div>}
                 </Spin>
             </Col>
