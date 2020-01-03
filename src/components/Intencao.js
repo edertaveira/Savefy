@@ -91,7 +91,7 @@ function Intencao(props) {
                         {intencoes[0].testemunho
                             ? <Card title={<span><FaCross /> Testemunho</span>}>
                                 <p>{intencoes[0].testemunho.content}</p>
-                                <small>{moment(intencoes[0].createdAt.toDate()).fromNow()}</small>
+                                <small>{moment(intencoes[0].testemunho.createdAt.fromNow()}</small>
                             </Card>
                             : <div style={{ textAlign: 'center' }}><Button onClick={() => abrirModalTestemunho()} ><FaCross />Adicionar Testemunho</Button></div>}
 
