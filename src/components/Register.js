@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../logo.svg'
 import { Form, Icon, Input, Button, Checkbox, Row, Col, message } from 'antd';
 import { Link, useLocation } from "react-router-dom";
@@ -54,10 +54,14 @@ function RegisterForm(props) {
         labelCol: {
             xs: { span: 24 },
             sm: { span: 8 },
+            md: { span: 8 },
+            lg: { span: 8 },
         },
         wrapperCol: {
             xs: { span: 24 },
-            sm: { span: 16 },
+            sm: { span: 10 },
+            md: { span: 10 },
+            lg: { span: 10 },
         },
     }
 
@@ -75,8 +79,8 @@ function RegisterForm(props) {
     };
 
     return (
-        <Row>
-            <Col span={12} offset={4}>
+        <Row type="flex" justify="center" align="top">
+            <Col lg={18} md={18} sm={20} xs={20}>
                 <Form {...formStyle} onSubmit={handleSubmit} className="login-form">
                     <Link to="/" style={{ display: 'block', fontFamily: `'Beth Ellen', cursive`, textAlign: 'center', fontSize: 60, margin: '60px auto' }}>
                         Anjo<span style={{ color: '#b7b7b7' }}>bom</span>

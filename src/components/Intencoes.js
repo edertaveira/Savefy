@@ -82,16 +82,16 @@ function Intencoes() {
             <Online>
                 <Spin spinning={!intencoes} tip="Carregando Intenções...">
                     <Row gutter={16}>
-                        <Col span={6}>
+                        <Col lg={6} md={6} sm={12} xs={12}>
                             <Statistic title="Intenções" value={getTotal().intencoesTotal} />
                         </Col>
-                        <Col span={6}>
+                        <Col lg={6} md={6} sm={12} xs={12}>
                             <Statistic title="Intercessores" value={getTotal().oracoesTotal} />
                         </Col>
-                        <Col span={6}>
+                        <Col lg={6} md={6} sm={12} xs={12}>
                             <Statistic title="Mensagens" value={getTotal().comentariosTotal} />
                         </Col>
-                        <Col span={6}>
+                        <Col lg={6} md={6} sm={12} xs={12}>
                             <Statistic title="Testemunhos" value={getTotal().testemunhosTotal} />
                         </Col>
                     </Row>

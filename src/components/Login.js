@@ -49,15 +49,15 @@ function LoginForm(props) {
 
     return (
         <>
-            <Row>
-                <Col span={12} offset={6}>
+            <Row type="flex" justify="center" align="top">
+                <Col lg={10} md={10} sm={20} xs={20}>
                     <Link to="/" style={{ display: 'block', fontFamily: `'Beth Ellen', cursive`, textAlign: 'center', fontSize: 60, margin: '60px auto' }}>
                         Anjo<span style={{ color: '#b7b7b7' }}>bom</span>
                     </Link>
                 </Col>
             </Row>
-            <Row>
-                <Col span={8} offset={8}>
+            <Row type="flex" justify="center" align="top">
+                <Col lg={10} md={10} sm={20} xs={20}>
                     <Form onSubmit={handleSubmit} className="login-form">
                         <Form.Item label="Email">
                             {getFieldDecorator('email', {

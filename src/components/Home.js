@@ -54,7 +54,7 @@ function HomeForm(props) {
                     code,
                     createdAt: new Date(),
                     ip,
-                    ...ipLocation, 
+                    ...ipLocation,
                     oracoes: [],
                     comentarios: []
                 }).then((data) => {
@@ -80,8 +80,8 @@ function HomeForm(props) {
     }
 
     return (
-        <Row>
-            <Col span={12} offset={6}>
+        <Row type="flex" justify="center" align="top">
+            <Col lg={18} md={18} sm={20} xs={20}>
                 <Link to="/" style={{ display: 'block', fontFamily: `'Beth Ellen', cursive`, textAlign: 'center', fontSize: 60, margin: '60px auto' }}>
                     Anjo<span style={{ color: '#b7b7b7' }}>bom</span>
                 </Link>

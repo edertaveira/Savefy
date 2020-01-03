@@ -51,8 +51,8 @@ function Intencao(props) {
     }
 
     return (
-        <Row>
-            <Col span={12} offset={6}>
+        <Row type="flex" justify="center" align="top">
+            <Col lg={18} md={18} sm={20} xs={20}>
                 <Link to="/" style={{ display: 'block', fontFamily: `'Beth Ellen', cursive`, textAlign: 'center', fontSize: 60, margin: '60px auto' }}>
                     Anjo<span style={{ color: '#b7b7b7' }}>bom</span>
                 </Link>
@@ -70,16 +70,16 @@ function Intencao(props) {
                         <br />
 
                         <Alert type="info" message={`Guarde o Código da sua Intenção (${intencoes[0].code}) para você rastrear mais tarde.`} />
-                        <br />
-                        <br />
-
+                        
                         <Row gutter={16}>
-                            <Col span={12}>
+                            <Col lg={12} md={12} sm={12} xs={24}>
+                                <br />
                                 <Card title="Código da Intenção">
                                     <Text copyable>{intencoes[0].code}</Text>
                                 </Card>
                             </Col>
-                            <Col span={12}>
+                            <Col lg={12} md={12} sm={12} xs={24}>
+                                <br />
                                 <Card title="Número de Intercessores" >
                                     <FaPray size="16" />
                                     <Badge count={intencoes[0].oracoes.length} />
