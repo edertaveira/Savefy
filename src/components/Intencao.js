@@ -7,9 +7,10 @@ import { Link, useLocation } from "react-router-dom";
 import queryString from 'query-string';
 import momentPTBR from '../constants/momentPTBR';
 import moment from 'moment';
-import { FaPray } from 'react-icons/fa'
+import { FaPray, FaCross } from 'react-icons/fa'
 import ModalRastrear from './ModalRastrear';
-const { Text } = Typography;
+import ModalTestemunho from './ModalTestemunho';
+const { Text, Title } = Typography;
 
 
 function Intencao(props) {
@@ -17,6 +18,7 @@ function Intencao(props) {
     const location = useLocation();
     const [iconLoading, setIconLoading] = useState(false);
     const [visible, setVisible] = useState(false);
+    const [visibleTestemunho, setVisibleTestemunho] = useState(false);
     const [elem, setElem] = useState({});
 
     const parsed = queryString.parse(location.search);
@@ -42,6 +44,10 @@ function Intencao(props) {
 
     const abrirModalRastrarIntencao = () => {
         setVisible(true);
+    }
+
+    const abrirModalTestemunho = () => {
+        setVisibleTestemunho(true);
     }
 
     return (
@@ -70,7 +76,7 @@ function Intencao(props) {
                         <Row gutter={16}>
                             <Col span={12}>
                                 <Card title="Código da Intenção">
-                                    <Text level={2} copyable>{intencoes[0].code}</Text>
+                                    <Text copyable>{intencoes[0].code}</Text>
                                 </Card>
                             </Col>
                             <Col span={12}>
@@ -80,6 +86,14 @@ function Intencao(props) {
                                 </Card>
                             </Col>
                         </Row>
+
+                        <br />
+                        {intencoes[0].testemunho
+                            ? <Card title={<span><FaCross /> Testemunho</span>}>
+                                <p>{intencoes[0].testemunho.content}</p>
+                                <small>{moment(intencoes[0].createdAt.toDate()).fromNow()}</small>
+                            </Card>
+                            : <div style={{ textAlign: 'center' }}><Button onClick={() => abrirModalTestemunho()} ><FaCross />Adicionar Testemunho</Button></div>}
 
                         {<List
                             className="comment-list"
@@ -102,11 +116,13 @@ function Intencao(props) {
                     </>}
                     {intencoes && intencoes.length === 0 && <div style={{ textAlign: 'center' }}>
                         <br /><br />
-                        <Alert type="warning" message="Esta intenção não existe." />
+                        <Alert type="warning" message={`A intenção de código ${parsed.code} não existe.`} />
                         <br /><br />
                         <Button onClick={() => abrirModalRastrarIntencao()} style={{ color: '#a25050' }} type="link"><FaPray /> Rastrear outra Intenção</Button>
                     </div>}
                 </Spin>
+                <ModalRastrear visible={visible} setVisible={setVisible} />
+                <ModalTestemunho visible={visibleTestemunho} intencao={intencoes && intencoes[0]} setVisible={setVisibleTestemunho} />
             </Col>
         </Row>
     );
