@@ -123,7 +123,7 @@ function Intencoes() {
                                 <p style={{ color: '#666666'}}>{intencao.city}-{intencao.regionCode}, {intencao.country}</p>
                                 <small>{moment(intencao.createdAt.toDate()).fromNow()}</small>
                             </Card>
-                        </List.Item>
+                        </List.Item> 
                     }}
                 />
                 <ModalComentario intencao={intencao} comentarios={comentarios} visible={visible} setVisible={setVisible} />
