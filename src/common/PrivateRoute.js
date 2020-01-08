@@ -9,17 +9,25 @@ import MenuBar from './MenuBar';
 import { Layout, Menu, Icon, Avatar, Button } from 'antd';
 import Loadable from 'react-loadable';
 import PageLoading from './PageLoading';
+import { FaCopyright } from 'react-icons/fa';
 
 const { Header, Content, Footer, Sider } = Layout;
 
 function PrivateRoute({ children, ...rest }) {
     const auth = useSelector(state => state.firebase.auth)
 
+    const logoStyle = {
+        margin: '16px 0 0 0',
+        float: 'left',
+        fontFamily: `'Pacifico', cursive`,
+        fontSize: '20px'
+    }
 
     const renderComponent = (AsyncFunc) => {
         return (
             <Layout>
                 <Header style={{ position: 'fixed', zIndex: 1, width: '100%', background: '#fff' }}>
+                    <Button type="link" style={logoStyle}>in4<span style={{ color: '#333' }}>us</span></Button>
                     <MenuBar />
                     {/* <Avatar style={{ backgroundColor: user.color }}>{firstLetters}</Avatar> <b>{user && user.nome}</b> */}
                 </Header>
@@ -28,7 +36,7 @@ function PrivateRoute({ children, ...rest }) {
                         <AsyncFunc />
                     </div>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>AnjoBom 2020</Footer>
+                <Footer style={{ textAlign: 'center' }}><span style={{ fontFamily: `'Pacifico', cursive` }}>intercede4.us</span> <FaCopyright style={{ margin: '-2px 9px' }} /> 2020</Footer>
             </Layout>
         );
     }

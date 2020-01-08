@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Icon, Input, Button, Tooltip, Row, Col, List, Divider, Modal, message, Comment, Empty } from 'antd';
 import { Link, useLocation, useHistory } from "react-router-dom";
+import { useTranslation, Trans } from 'react-i18next';
 
 const ModalRastrear = Form.create({ name: 'comentario' })(function RastrearForm(props) {
 
     const [iconLoading, setIconLoading] = useState(false);
     const { getFieldDecorator } = props.form;
     const history = useHistory();
+    const { t, i18n } = useTranslation();
+
+    useEffect(() => {
+        i18n.changeLanguage(localStorage.getItem('language'));
+    }, []);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -26,7 +32,7 @@ const ModalRastrear = Form.create({ name: 'comentario' })(function RastrearForm(
 
     return (
         <Modal
-            title="Rastrear Intenção"
+            title={t('label.track')}
             visible={props.visible}
             onCancel={handleCancel}
             footer={null}
@@ -35,9 +41,9 @@ const ModalRastrear = Form.create({ name: 'comentario' })(function RastrearForm(
             <Form onSubmit={handleSubmit} className="rastrear-form">
                 <Form.Item>
                     {getFieldDecorator('code', {
-                        rules: [{ required: true, message: 'Por favor, coloque o código da sua intenção.' }],
+                        rules: [{ required: true, message: t('msg.error.coderequired') }],
                     })(
-                        <Input type="text" placeholder="Código da Intenção" />,
+                        <Input type="text" placeholder={t('label.prayercode')} />,
                     )}
                 </Form.Item>
 
@@ -47,7 +53,7 @@ const ModalRastrear = Form.create({ name: 'comentario' })(function RastrearForm(
                         htmlType="submit"
                         loading={iconLoading}
                         className="login-form-button">
-                        Rastrear Intenção
+                        {t('label.track')}
                     </Button>
                 </Form.Item>
             </Form>

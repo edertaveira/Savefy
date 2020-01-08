@@ -6,6 +6,8 @@ import { useFirebase, isEmpty, isLoaded } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import routeNames from '../constants/routeNames';
 import { FaChurch } from 'react-icons/fa';
+import { useTranslation, Trans } from 'react-i18next'
+import Logo from '../common/Logo';
 
 const { Title } = Typography;
 
@@ -15,12 +17,12 @@ function LoginForm(props) {
     const history = useHistory();
     const firebase = useFirebase();
     const auth = useSelector(state => state.firebase && state.firebase.auth)
+    const { t, i18n } = useTranslation()
 
     const handleSubmit = e => {
         e.preventDefault();
         props.form.validateFields(async (err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
                 setIconLoading(true);
                 firebase.login({
                     email: values.email,
@@ -29,13 +31,13 @@ function LoginForm(props) {
                     let msg = '';
                     switch (e.code) {
                         case 'auth/user-not-found':
-                            msg = 'Usuário não existe.';
+                            msg = t('msg.error.usernotfound');
                             break;
                         case 'auth/wrong-password':
-                            msg = 'Senha ou Login incorreta.';
+                            msg = t('msg.error.wrongpassword');
                             break;
                         default:
-                            msg = 'Algo deu errado! Contate-nos caso persista.';
+                            msg = t('msg.error.general');
                             break;
                     }
                     message.error(msg);
@@ -54,20 +56,17 @@ function LoginForm(props) {
         <>
             <Row type="flex" justify="center" align="top">
                 <Col lg={10} md={10} sm={20} xs={20}>
-                    <Link to="/" style={{ display: 'block', fontFamily: `'Beth Ellen', cursive`, textAlign: 'center', fontSize: 60, margin: '60px auto' }}>
-                        Anjo<span style={{ color: '#b7b7b7' }}>bom</span>
-                    </Link>
+                    <Logo />
                 </Col>
             </Row>
             <Row type="flex" justify="center" align="top">
                 <Col lg={10} md={10} sm={20} xs={20}>
 
-                    <Title style={{ textAlign: 'center' }} level={4}><FaChurch size={20} /> Área do Intercessor</Title>
-                    <Divider />
+                    {/* <Title style={{ textAlign: 'center' }} level={4}><FaChurch size={20} /> {t("button.prayer")}</Title> */}
                     <Form onSubmit={handleSubmit} className="login-form">
-                        <Form.Item label="Email">
+                        <Form.Item label={t("label.email")}>
                             {getFieldDecorator('email', {
-                                rules: [{ required: true, message: 'Por favor, preencha o email.' }],
+                                rules: [{ required: true, message: t('msg.error.emailrequired') }],
                             })(
                                 <Input
                                     prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -75,9 +74,9 @@ function LoginForm(props) {
                                 />,
                             )}
                         </Form.Item>
-                        <Form.Item label="Senha">
+                        <Form.Item label={t("label.password")}>
                             {getFieldDecorator('password', {
-                                rules: [{ required: true, message: 'Por favor, preencha sua senha.' }],
+                                rules: [{ required: true, message: t('msg.error.passwordrequired') }],
                             })(
                                 <Input
                                     prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -87,23 +86,25 @@ function LoginForm(props) {
                             )}
                         </Form.Item>
                         <Form.Item>
-                            {/*<a className="login-form-forgot" href="">
+                            <div style={{ textAlign: 'center' }}>
+                                {/*<a className="login-form-forgot" href="">
                                 Esqueci a senha
                             </a>*/}
-                            <br />
-                            <Button type="primary" htmlType="submit"
-                                icon="check"
-                                loading={iconLoading}>
-                                Logar
+                                <br />
+                                <Button type="primary" htmlType="submit"
+                                    icon="check"
+                                    loading={iconLoading}>
+                                    {t('label.logar')}
                             </Button>
-                            {/*<span style={{ marginLeft: 10 }}>ou <Link to="/register">Cadastrar agora!</Link></span>*/}
+                                {/*<span style={{ marginLeft: 10 }}>ou <Link to="/register">Cadastrar agora!</Link></span>*/}
+                            </div>
                         </Form.Item>
                     </Form>
                 </Col>
             </Row>
         </>
-    );
-}
-
-const Login = Form.create({ name: 'login' })(LoginForm);
+            );
+        }
+        
+const Login = Form.create({name: 'login' })(LoginForm);
 export default Login;

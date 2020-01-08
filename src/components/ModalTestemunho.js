@@ -7,15 +7,24 @@ import { Link, useLocation } from "react-router-dom";
 import queryString from 'query-string'
 import moment from 'moment';
 import momentPTBR from '../constants/momentPTBR';
+import { useTranslation, Trans } from 'react-i18next';
 
 const ModalTestemunho = Form.create({ name: 'testemunho' })(function TestemunhoForm(props) {
 
     const firestore = useFirestore();
     const [iconLoading, setIconLoading] = useState(false);
     const { getFieldDecorator } = props.form;
-    const auth = useSelector(state => state.firebase.auth);
-    const profile = useSelector(state => state.firebase.profile);
-    moment.locale('pt-BR', momentPTBR);
+    const { t, i18n } = useTranslation();
+
+    useEffect(() => {
+        if (localStorage.getItem('language') !== 'en') {
+            moment.locale(localStorage.getItem('language'), momentPTBR);
+            i18n.changeLanguage(localStorage.getItem('language'));
+        } else {
+            moment.locale('en');
+        }
+    }, []);
+
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -25,11 +34,11 @@ const ModalTestemunho = Form.create({ name: 'testemunho' })(function TestemunhoF
 
                 firestore.collection('intencoes').doc(props.intencao.id)
                     .set({ ...props.intencao, testemunho: { ...values, createdAt: Date.now() } }).then(data => {
-                        message.success('Testemunho enviado!');
+                        message.success(t('msg.testimonial.success'));
                         props.setVisible(false);
                         props.form.resetFields();
                     }).catch(e => {
-                        message.error('Aconteceu algo de errado, tente novamente mais tarde.');
+                        message.error(t('msg.error.general'));
                     }).finally(() => {
                         setIconLoading(false);
                     })
@@ -44,22 +53,22 @@ const ModalTestemunho = Form.create({ name: 'testemunho' })(function TestemunhoF
 
     return (
         <Modal
-            title="Testemunho"
+            title={t('label.testimonial')}
             visible={props.visible}
             onCancel={handleCancel}
             footer={null}
         >
             <Form onSubmit={handleSubmit} className="comentario-form">
-                <p>Deus fez muito! partilhe conosco as obras do Altíssimo para que outros irmãos possam ser alcançados.</p>
-                <p>Uma vez Postado você não poderá editar nem excluir.</p>
+                <p>{t('text.testimonial.1')}</p>
+                <p>{t('text.testimonial.2')}</p>
                 <Form.Item>
                     {getFieldDecorator('content', {
-                        rules: [{ required: true, message: 'Por favor, coloque seu comentário.' }],
+                        rules: [{ required: true, message: t('msg.testimonialrequired') }],
                     })(
                         <TextArea
                             autoSize={{ minRows: 4, maxRows: 12 }}
                             type="password"
-                            placeholder="Coloque aqui o que o Senhor fez na sua vida sobre esta intenção."
+                            placeholder={t('text.testimonial.placeholder')}
                         />,
                     )}
                 </Form.Item>
@@ -71,7 +80,7 @@ const ModalTestemunho = Form.create({ name: 'testemunho' })(function TestemunhoF
                         icon="check"
                         loading={iconLoading}
                         className="login-form-button">
-                        Postar Testemunho
+                        {t('label.send')}
                     </Button>
                 </Form.Item>
             </Form>

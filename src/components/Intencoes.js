@@ -8,6 +8,7 @@ import moment from 'moment';
 import momentPTBR from '../constants/momentPTBR';
 import { FaChurch, FaPray, FaMicrophone, FaStop, FaPen, FaCross } from 'react-icons/fa';
 import ModalComentario from './ModalComentario';
+import { useTranslation, Trans } from 'react-i18next'
 
 
 function Intencoes() {
@@ -17,13 +18,23 @@ function Intencoes() {
     const [visible, setVisible] = useState(false);
     const [visibleTestemunho, setVisibleTestemunho] = useState(false);
     const [testemunho, setTestemunho] = useState({});
+    const { t, i18n } = useTranslation();
 
     useFirestoreConnect(() => [
         { collection: 'intencoes', orderBy: [['createdAt', 'desc']] },
     ])
     const firestore = useFirestore();
     let intencoes = useSelector(state => state.firestore.ordered.intencoes);
-    moment.locale('pt-BR', momentPTBR);
+
+    useEffect(() => {
+        if (localStorage.getItem('language') !== 'en') {
+            moment.locale(localStorage.getItem('language'), momentPTBR);
+            i18n.changeLanguage(localStorage.getItem('language'));
+        } else {
+            moment.locale('en');
+        }
+    }, []);
+
     const auth = useSelector(state => state.firebase.auth);
 
     const rezar = async (id) => {
@@ -38,7 +49,7 @@ function Intencoes() {
             return {
                 author: item.name,
                 content: <p>{item.content}</p>,
-                datetime: (<Tooltip title={moment(item.createdAt).format('DD/MM/YYYY HH:mm:ss')}>
+                datetime: (<Tooltip title={moment(item.createdAt).format(t('dateformat'))}>
                     <span>{moment(item.createdAt).fromNow()}</span>
                 </Tooltip>),
             }
@@ -76,23 +87,23 @@ function Intencoes() {
     return (
         <>
             <Offline>
-                <Alert type="warning" message="Verifique sua conexão com a internet" />
+                <Alert type="warning" message={t('msg.info.networfail')} />
                 <br /><br />
             </Offline>
             <Online>
                 <Spin spinning={!intencoes} tip="Carregando Intenções...">
                     <Row gutter={16}>
                         <Col lg={6} md={6} sm={12} xs={12}>
-                            <Statistic title="Intenções" value={getTotal().intencoesTotal} />
+                            <Statistic title={t('label.intentions')} value={getTotal().intencoesTotal} />
                         </Col>
                         <Col lg={6} md={6} sm={12} xs={12}>
-                            <Statistic title="Intercessores" value={getTotal().oracoesTotal} />
+                            <Statistic title={t('label.prayers')} value={getTotal().oracoesTotal} />
                         </Col>
                         <Col lg={6} md={6} sm={12} xs={12}>
-                            <Statistic title="Mensagens" value={getTotal().comentariosTotal} />
+                            <Statistic title={t('label.messages')} value={getTotal().comentariosTotal} />
                         </Col>
                         <Col lg={6} md={6} sm={12} xs={12}>
-                            <Statistic title="Testemunhos" value={getTotal().testemunhosTotal} />
+                            <Statistic title={t('label.testimonials')} value={getTotal().testemunhosTotal} />
                         </Col>
                     </Row>
                     <br />
@@ -110,7 +121,7 @@ function Intencoes() {
                             xxl: 3,
                         }}
                         locale={{
-                            emptyText: <Empty description="Nenhuma Intenção encontrada" />
+                            emptyText: <Empty description={t('msg.info.nointentions')} />
                         }}
                         dataSource={intencoes}
                         renderItem={intencao => {
@@ -118,19 +129,19 @@ function Intencoes() {
 
                             return <List.Item key={intencao.id}>
                                 <Card style={rezou ? { background: '#F0FFE4' } : {}} actions={[
-                                    <Tooltip title={rezou ? "Você já Intercedeu!": "Interceder!"}>
+                                    <Tooltip title={rezou ? t('label.prayed') : t('label.pray')}>
                                         <Button disabled={rezou} onClick={() => rezar(intencao.id)} type="link">
                                             <FaPray size="16" />
                                             <Badge count={intencao.oracoes && intencao.oracoes.length} style={{ backgroundColor: '#52c41a', marginTop: '-7px' }} />
                                         </Button>
                                     </Tooltip>,
-                                    <Tooltip title="Deixar uma mensagem">
+                                    <Tooltip title={t('label.message')}>
                                         <Button onClick={() => abrirModalComentario(intencao)} type="link">
                                             <FaPen size="16" />
                                             <Badge count={intencao.comentarios && intencao.comentarios.length} style={{ marginTop: '-7px' }} />
                                         </Button>
                                     </Tooltip>,
-                                    <Tooltip title="Ver Testemunho">
+                                    <Tooltip title={t('label.testimonials')}>
                                         <Button disabled={!intencao.testemunho} onClick={() => abrirModalTestemunho(intencao)} type="link">
                                             <FaCross size="16" />
                                         </Button>
@@ -154,7 +165,7 @@ function Intencoes() {
                     <p>{testemunho.content}</p>
                     <small>{moment(testemunho.createdAt && testemunho.createdAt).fromNow()}</small>
                 </Modal>
-        </Online >
+            </Online >
         </>
     )
 

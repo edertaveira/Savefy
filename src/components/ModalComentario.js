@@ -7,6 +7,7 @@ import { Link, useLocation } from "react-router-dom";
 import queryString from 'query-string'
 import moment from 'moment';
 import momentPTBR from '../constants/momentPTBR';
+import { useTranslation, Trans } from 'react-i18next';
 
 const ModalComentario = Form.create({ name: 'comentario' })(function ComentarioForm(props) {
 
@@ -15,7 +16,16 @@ const ModalComentario = Form.create({ name: 'comentario' })(function ComentarioF
     const { getFieldDecorator } = props.form;
     const auth = useSelector(state => state.firebase.auth);
     const profile = useSelector(state => state.firebase.profile);
-    moment.locale('pt-BR', momentPTBR);
+    const { t, i18n } = useTranslation();
+
+    useEffect(() => {
+        if (localStorage.getItem('language') !== 'en') {
+            moment.locale(localStorage.getItem('language'), momentPTBR);
+            i18n.changeLanguage(localStorage.getItem('language'));
+        } else {
+            moment.locale('en');
+        }
+    }, []);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -28,11 +38,11 @@ const ModalComentario = Form.create({ name: 'comentario' })(function ComentarioF
                 console.log(comentarios);
                 firestore.collection('intencoes').doc(props.intencao.id)
                     .set({ ...props.intencao, comentarios }).then(data => {
-                        message.success('Comentário enviado!');
+                        message.success(t('msg.message.success'));
                         props.setVisible(false);
                         props.form.resetFields();
                     }).catch(e => {
-                        message.error('Aconteceu algo de errado, tente novamente mais tarde.');
+                        message.error(t('msg.error.general'));
                     }).finally(() => {
                         setIconLoading(false);
                     })
@@ -47,7 +57,7 @@ const ModalComentario = Form.create({ name: 'comentario' })(function ComentarioF
 
     return (
         <Modal
-            title="Comentario"
+            title={t('label.messages')}
             visible={props.visible}
             onCancel={handleCancel}
             footer={null}
@@ -55,12 +65,12 @@ const ModalComentario = Form.create({ name: 'comentario' })(function ComentarioF
             <Form onSubmit={handleSubmit} className="comentario-form">
                 <Form.Item>
                     {getFieldDecorator('content', {
-                        rules: [{ required: true, message: 'Por favor, coloque seu comentário.' }],
+                        rules: [{ required: true, message: t('msg.messagerequired') }],
                     })(
                         <TextArea
                             autoSize={{ minRows: 4, maxRows: 12 }}
                             type="password"
-                            placeholder="Coloque aqui o que o Senhor te revelou, uma palavra de ciência ou sabedoria, uma passagem, um conselho."
+                            placeholder={t('msg.message.placeholder')}
                         />,
                     )}
                 </Form.Item>
@@ -72,17 +82,17 @@ const ModalComentario = Form.create({ name: 'comentario' })(function ComentarioF
                         icon="check"
                         loading={iconLoading}
                         className="login-form-button">
-                        Comentar
+                        {t('label.send')}
                     </Button>
                 </Form.Item>
 
                 <List
                     className="comment-list"
-                    header={`${props.comentarios && props.comentarios.length} comentários`}
+                    header={`${props.comentarios && props.comentarios.length} ${t('label.messages')}`}
                     itemLayout="horizontal"
                     dataSource={props.comentarios}
                     locale={{
-                        emptyText: <Empty description="Nenhum Comentário" />
+                        emptyText: <Empty description={t('msg.nomessages')}/>
                     }}
                     renderItem={item => (
                         <li>

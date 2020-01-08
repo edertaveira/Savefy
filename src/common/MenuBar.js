@@ -1,18 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import routeNames from '../constants/routeNames';
-import { Layout, Menu, Icon, Button } from 'antd';
+import { Layout, Menu, Icon, Button, Tooltip } from 'antd';
 import { Link, withRouter } from "react-router-dom";
 import { useSelector } from 'react-redux'
 import './MenuBar.css';
 import { useFirebase, isLoaded, isEmpty } from 'react-redux-firebase'
 import { useHistory } from 'react-router-dom';
-const { Sider } = Layout;
+import { useTranslation, Trans } from 'react-i18next';
+import ModalLanguage from '../components/ModalLanguage';
 
 function MenuBar(props) {
 
     const firebase = useFirebase();
     const history = useHistory();
-    const profile = useSelector(state => state.firebase.profile)
+    const profile = useSelector(state => state.firebase.profile);
+    const [modalLanguageVisible, setModalLanguageVisible] = useState(false);
+    const { t, i18n } = useTranslation();
 
     const getLink = (route, roles) => {
         return route;
@@ -21,7 +24,7 @@ function MenuBar(props) {
     const menuItems = [
         {
             icon: "team",
-            name: 'Intenções',
+            name: t('label.intentions'),
             link: getLink(routeNames.INTENCOES, []),
             roles: ['intercessor'],
             style: { color: 'rgb(118, 160, 255)' }
@@ -43,7 +46,7 @@ function MenuBar(props) {
     let indexSelected = menuItems.findIndex(item => history.location.pathname === item.link);
     let selected = indexSelected !== -1 ? `menu_${menuItems[indexSelected].name}` : '';
 
-    return (
+    return (<>
         <Menu mode="horizontal" style={{ lineHeight: '64px' }} defaultSelectedKeys={[selected]}>
             {menuItems.map((menu, index) => {
                 //const user = JSON.parse(localStorage.getItem('user'));
@@ -58,10 +61,17 @@ function MenuBar(props) {
                 </Menu.Item>)
             })}
             <div style={{ float: 'right' }} >
-                {profile.name} 
-                <Button icon="logout" style={{ marginLeft: 10}} onClick={() => handleLogout()} size="small" type="danger">Sair</Button>
+                {profile.name}
+
+                <Tooltip title={t('label.changeLanguage')}>
+                    <Button type="link" onClick={() => setModalLanguageVisible(true)}><img width={20} src={`flags/${localStorage.getItem('language')}.png`} /></Button>
+                </Tooltip>
+
+                <Button icon="logout" style={{ marginLeft: 10 }} onClick={() => handleLogout()} size="small" type="danger">{t('button.signout')}</Button>
             </div>
         </Menu>
+        <ModalLanguage visible={modalLanguageVisible} setVisible={setModalLanguageVisible} />
+    </>
     );
 }
 
