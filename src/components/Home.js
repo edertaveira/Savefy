@@ -6,7 +6,7 @@ import TextArea from 'antd/lib/input/TextArea';
 import { useFirestore, useFirestoreConnect, isLoaded } from 'react-redux-firebase'
 import { Link, useLocation, useHistory } from "react-router-dom";
 import shortid from 'shortid';
-import { FaChurch, FaPray, FaMicrophone, FaStop } from 'react-icons/fa';
+import { FaChurch, FaPray, FaMicrophone, FaStop, FaCopyright } from 'react-icons/fa';
 import publicIp from 'public-ip';
 import iplocation from "iplocation";
 import ModalRastrear from './ModalRastrear';
@@ -162,7 +162,7 @@ function HomeForm(props) {
                         <img alt="" border="0" src="https://www.paypal.com/en_BR/i/scr/pixel.gif" width="1" height="1" />
                     </form>
                     <br /><br /><br />
-                    <small>intercede4.us 2020</small>
+                    <div><span style={{ fontFamily: `'Pacifico', cursive` }}>intercede4.us</span> <FaCopyright style={{ margin: '-2px 9px' }} /> 2020</div>
                 </div>
                 <ModalRastrear visible={visible} setVisible={setVisible} />
                 <ModalLanguage visible={modalLanguageVisible} setVisible={setModalLanguageVisible} />
