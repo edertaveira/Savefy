@@ -6,15 +6,17 @@ import 'firebase/auth'
 import 'firebase/database'
 import 'firebase/firestore'
 
+console.log(process.env.REACT_APP_apiKey);
+
 const firebaseConfig = {
-    apiKey: "AIzaSyCsQiyrcx9SMr9TStzcK713lk_cpJuAf6s",
-    authDomain: "anjobom-10d2b.firebaseapp.com",
-    databaseURL: "https://anjobom-10d2b.firebaseio.com",
-    projectId: "anjobom-10d2b",
-    storageBucket: "anjobom-10d2b.appspot.com",
-    messagingSenderId: "637822282147",
-    appId: "1:637822282147:web:7dc12044bddfb4d07b9216",
-    measurementId: "G-T1PJBEFBN8"
+    apiKey: process.env.REACT_APP_apiKey,
+    authDomain: process.env.REACT_APP_authDomain,
+    databaseURL: process.env.REACT_APP_databaseURL,
+    projectId: process.env.REACT_APP_projectId,
+    storageBucket: process.env.REACT_APP_storageBucket,
+    messagingSenderId: process.env.REACT_APP_messagingSenderId,
+    appId: process.env.REACT_APP_appId,
+    measurementId: process.env.REACT_APP_measurementId
 }; // from Firebase Console
 const rfConfig = {} // optional redux-firestore Config Options
 

@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "antd": "^3.26.2",
     "detect-browser-language": "^0.0.2",
+    "dotenv": "^8.2.0",
     "firebase": "^7.6.1",
     "history": "^4.10.1",
     "i18next": "^19.0.3",
