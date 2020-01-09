@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Form,  Button, Tooltip, Row, Col, Divider, Tabs, message, Statistic } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { useFirestore } from 'react-redux-firebase'
-import { Link, useLocation, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import shortid from 'shortid';
 import { FaChurch, FaPray, FaCopyright } from 'react-icons/fa';
 import publicIp from 'public-ip';
@@ -42,10 +42,8 @@ function HomeForm(props) {
     useEffect(() => {
         configureLastRecorded();
         if (localStorage.getItem('language')) {
-            // eslint-disable-next-line react-hooks/exhaustive-deps
             i18n.changeLanguage(localStorage.getItem('language'));
         } else {
-            // eslint-disable-next-line react-hooks/exhaustive-deps
             i18n.changeLanguage(detectBrowserLanguage().toLowerCase());
             localStorage.setItem('language', detectBrowserLanguage().toLowerCase());
         }
