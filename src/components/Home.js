@@ -72,7 +72,7 @@ function HomeForm(props) {
                     ...ipLocation,
                     oracoes: [],
                     comentarios: [],
-                    language: languages[0]
+                    language: (languages && languages[0]) ? languages[0][0] : null
                 }).then((data) => {
                     configureLastRecorded(true);
                     setIconLoading(false);
