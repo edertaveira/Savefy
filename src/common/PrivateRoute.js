@@ -24,7 +24,7 @@ function PrivateRoute({ children, ...rest }) {
         return (
             <Layout>
                 <Header style={{ position: 'fixed', zIndex: 1, width: '100%', background: '#fff' }}>
-                    <Button type="link" style={logoStyle}>savefy</Button>
+                    <Button type="link" style={logoStyle}>savefy </Button>
                     <MenuBar />
                     {/* <Avatar style={{ backgroundColor: user.color }}>{firstLetters}</Avatar> <b>{user && user.nome}</b> */}
                 </Header>
