@@ -10,6 +10,6 @@ deploy:
   provider: firebase
   skip_cleanup: true
   token:
-    secure: $FIREBASE_TOKEN
+    secure: "$FIREBASE_TOKEN"
   on:
     branch: master
