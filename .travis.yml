@@ -1,15 +1,10 @@
 language: node_js
 node_js:
-  - "node"
+- node
 warnings_are_errors: false
 install:
-  - npm install
+- npm install
 script:
-  - npm run build
-deploy:
-  provider: firebase
-  skip_cleanup: true
-  token:
-    secure: "$FIREBASE_TOKEN"
-  on:
-    branch: master
+- npm run build
+after_success:
+- firebase deploy --token $FIREBASE_TOKEN
