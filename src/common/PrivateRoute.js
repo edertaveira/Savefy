@@ -1,17 +1,14 @@
 import React from 'react'
-import {
-    Route,
-    Redirect
-} from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux'
-import { useFirebase, isLoaded, isEmpty } from 'react-redux-firebase'
+import { isLoaded, isEmpty } from 'react-redux-firebase'
 import MenuBar from './MenuBar';
-import { Layout, Menu, Icon, Avatar, Button } from 'antd';
+import { Layout, Button } from 'antd';
 import Loadable from 'react-loadable';
 import PageLoading from './PageLoading';
 import { FaCopyright } from 'react-icons/fa';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Footer } = Layout;
 
 function PrivateRoute({ children, ...rest }) {
     const auth = useSelector(state => state.firebase.auth)

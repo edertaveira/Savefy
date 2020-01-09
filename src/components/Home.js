@@ -1,12 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
-import { Form, Icon, Input, Button, Tooltip, Row, Col, Divider, Typography, Tabs, message, Statistic } from 'antd';
-import { useSelector } from 'react-redux';
+import { Form,  Button, Tooltip, Row, Col, Divider, Tabs, message, Statistic } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
-import { useFirestore, useFirestoreConnect, isLoaded } from 'react-redux-firebase'
+import { useFirestore } from 'react-redux-firebase'
 import { Link, useLocation, useHistory } from "react-router-dom";
 import shortid from 'shortid';
-import { FaChurch, FaPray, FaMicrophone, FaStop, FaCopyright } from 'react-icons/fa';
+import { FaChurch, FaPray, FaCopyright } from 'react-icons/fa';
 import publicIp from 'public-ip';
 import iplocation from "iplocation";
 import ModalRastrear from './ModalRastrear';
@@ -18,12 +17,10 @@ import detectBrowserLanguage from 'detect-browser-language'
 
 
 const { TabPane } = Tabs;
-const { Text, Title } = Typography;
 const { Countdown } = Statistic;
 
 function HomeForm(props) {
     const firestore = useFirestore();
-    const location = useLocation();
     const history = useHistory();
     const [iconLoading, setIconLoading] = useState(false);
     const [modalLanguageVisible, setModalLanguageVisible] = useState(false);
@@ -45,8 +42,10 @@ function HomeForm(props) {
     useEffect(() => {
         configureLastRecorded();
         if (localStorage.getItem('language')) {
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             i18n.changeLanguage(localStorage.getItem('language'));
         } else {
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             i18n.changeLanguage(detectBrowserLanguage().toLowerCase());
             localStorage.setItem('language', detectBrowserLanguage().toLowerCase());
         }
@@ -86,7 +85,6 @@ function HomeForm(props) {
     }
 
     const onFinish = () => {
-        //localStorage.clear();
         localStorage.setItem('lastRecordedAt', null);
         setLastRecordedAt(null);
     }
@@ -96,7 +94,7 @@ function HomeForm(props) {
             <Link style={{ float: 'left', marginTop: '10px' }} className="ant-btn ant-btn-link" to='/login'><FaChurch size={20} /></Link>
         </Tooltip>
         <Tooltip title={t('label.changeLanguage')}>
-            <Button type="link" onClick={() => setModalLanguageVisible(true)}><img width={20} src={`flags/${localStorage.getItem('language')}.png`} /></Button>
+            <Button type="link" onClick={() => setModalLanguageVisible(true)}><img alt="flag" width={20} src={`flags/${localStorage.getItem('language')}.png`} /></Button>
         </Tooltip>
     </>);
 

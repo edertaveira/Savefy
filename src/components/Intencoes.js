@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Card, List, Tooltip, Col, Row, Badge, Layout, Spin, Statistic, Icon, Typography, Button, PageHeader, Input, Alert, Empty, Divider, Modal } from 'antd';
+import { Card, List, Tooltip, Col, Row, Badge, Spin, Statistic, Button, Alert, Empty, Divider, Modal } from 'antd';
 import { Offline, Online } from "react-detect-offline";
 //import ExtraLinks from '../common/ExtraLinks';
 import { useSelector } from 'react-redux'
-import { useFirestoreConnect, useFirestore, useFirebase } from 'react-redux-firebase'
+import { useFirestoreConnect, useFirestore } from 'react-redux-firebase'
 import moment from 'moment';
 import momentPTBR from '../constants/momentPTBR';
-import { FaChurch, FaPray, FaMicrophone, FaStop, FaPen, FaCross } from 'react-icons/fa';
+import { FaPray, FaPen, FaCross } from 'react-icons/fa';
 import ModalComentario from './ModalComentario';
-import { useTranslation, Trans } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 
 
 function Intencoes() {
@@ -29,6 +29,7 @@ function Intencoes() {
     useEffect(() => {
         if (localStorage.getItem('language') !== 'en') {
             moment.locale(localStorage.getItem('language'), momentPTBR);
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             i18n.changeLanguage(localStorage.getItem('language'));
         } else {
             moment.locale('en');
@@ -39,7 +40,6 @@ function Intencoes() {
 
     const rezar = async (id) => {
         const intencao = intencoes.find(item => item.id === id);
-        //const oracao = intencao.oracoes && intencao.oracoes.find(item => item === auth.uid);
         let oracoes = [...intencao.oracoes, auth.uid];
         await firestore.collection('intencoes').doc(id).set({ ...intencao, oracoes });
     }
@@ -71,9 +71,9 @@ function Intencoes() {
         let oracoesTotal = 0;
         let testemunhosTotal = 0;
         if (intencoes) {
-            intencoes.map(item => { comentariosTotal += item.comentarios.length; });
-            intencoes.map(item => { oracoesTotal += item.oracoes.length; });
-            intencoes.map(item => { if (item.testemunho) testemunhosTotal += 1; });
+            intencoes.map(item => { comentariosTotal += item.comentarios.length; return; });
+            intencoes.map(item => { oracoesTotal += item.oracoes.length; return; });
+            intencoes.map(item => { if (item.testemunho) testemunhosTotal += 1; return; });
         }
         return {
             intencoesTotal: intencoes && intencoes.length,

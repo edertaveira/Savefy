@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Icon, Input, Button, Tooltip, Row, Col, List, Divider, Modal, message, Comment, Empty } from 'antd';
-import { useSelector } from 'react-redux';
+import { Form, Button, Modal, message } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
-import { useFirestore, useFirestoreConnect, isLoaded } from 'react-redux-firebase'
-import { Link, useLocation } from "react-router-dom";
-import queryString from 'query-string'
+import { useFirestore } from 'react-redux-firebase';
 import moment from 'moment';
 import momentPTBR from '../constants/momentPTBR';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 const ModalTestemunho = Form.create({ name: 'testemunho' })(function TestemunhoForm(props) {
 
@@ -19,6 +16,7 @@ const ModalTestemunho = Form.create({ name: 'testemunho' })(function TestemunhoF
     useEffect(() => {
         if (localStorage.getItem('language') !== 'en') {
             moment.locale(localStorage.getItem('language'), momentPTBR);
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             i18n.changeLanguage(localStorage.getItem('language'));
         } else {
             moment.locale('en');

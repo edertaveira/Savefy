@@ -1,26 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Icon, Input, Button, Radio, Row, Col, List, Divider, Modal, message, Comment, Empty } from 'antd';
+import { Form, Button, Radio, Modal } from 'antd';
 import { useSelector } from 'react-redux';
-import { useFirestore, useFirebase } from 'react-redux-firebase'
+import { useFirebase } from 'react-redux-firebase'
 import moment from 'moment';
 import momentPTBR from '../constants/momentPTBR';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 const ModalLanguage = Form.create({ name: 'language' })(function LanguageForm(props) {
 
-    const firebase = useFirebase();
-    const [iconLoading, setIconLoading] = useState(false);
+    const [iconLoading] = useState(false);
     const { getFieldDecorator } = props.form;
-    const profile = useSelector(state => state.firebase.profile);
     const { t, i18n } = useTranslation();
-
-    moment.locale('pt-BR', momentPTBR);
 
     const handleSubmit = e => {
         e.preventDefault();
         props.form.validateFields(async (err, values) => {
             if (!err) {
-                //firebase.updateProfile({ language: values.language });
                 localStorage.setItem('language', values.language);
                 i18n.changeLanguage(values.language.toLowerCase());
                 props.setVisible(false);
@@ -38,14 +33,11 @@ const ModalLanguage = Form.create({ name: 'language' })(function LanguageForm(pr
         props.form.setFieldsValue({ language: localStorage.getItem('language') })
     }, [])
 
-
-
     const radioStyle = {
         display: 'block',
         height: '30px',
         lineHeight: '30px',
     };
-
 
     return (
         <Modal
@@ -61,19 +53,19 @@ const ModalLanguage = Form.create({ name: 'language' })(function LanguageForm(pr
                     })(
                         <Radio.Group>
                             <Radio style={radioStyle} value="en">
-                                <img width={15} src={`flags/en.png`} /> 
+                                <img alt="English flag" width={15} src={`flags/en.png`} />
                                 English
                             </Radio>
                             <Radio style={radioStyle} value="pt-br">
-                                <img width={15} src={`flags/pt-br.png`} /> 
+                                <img alt="Brazil flag" width={15} src={`flags/pt-br.png`} />
                                 Português
                             </Radio>
                             <Radio disabled style={radioStyle} value="es">
-                                <img width={15} src={`flags/es.png`} /> 
+                                <img alt="Spanish flag" width={15} src={`flags/es.png`} />
                                 Espanõl ({t('msg.commingsoon')})
                             </Radio>
                             <Radio disabled style={radioStyle} value="it">
-                                <img width={15} src={`flags/it.png`} /> 
+                                <img alt="Italy flag" width={15} src={`flags/it.png`} />
                                 Italiano ({t('msg.commingsoon')})
                             </Radio>
                         </Radio.Group>,

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import routeNames from '../constants/routeNames';
-import { Layout, Menu, Icon, Button, Tooltip } from 'antd';
-import { Link, withRouter } from "react-router-dom";
+import { Menu, Icon, Button, Tooltip } from 'antd';
+import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux'
 import './MenuBar.css';
-import { useFirebase, isLoaded, isEmpty } from 'react-redux-firebase'
+import { useFirebase } from 'react-redux-firebase'
 import { useHistory } from 'react-router-dom';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import ModalLanguage from '../components/ModalLanguage';
 
 function MenuBar(props) {
@@ -15,7 +15,7 @@ function MenuBar(props) {
     const history = useHistory();
     const profile = useSelector(state => state.firebase.profile);
     const [modalLanguageVisible, setModalLanguageVisible] = useState(false);
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     const getLink = (route, roles) => {
         return route;
@@ -29,13 +29,6 @@ function MenuBar(props) {
             roles: ['intercessor'],
             style: { color: 'rgb(118, 160, 255)' }
         },
-        // {
-        //     icon: "setting",
-        //     name: 'Configurações',
-        //     link: getLink(routeNames.CONFIGURACOES, []),
-        //     roles: ['intercessor'],
-        //     style: { color: 'rgb(118, 160, 255)' }
-        // }
     ];
 
     const handleLogout = () => {
@@ -64,7 +57,7 @@ function MenuBar(props) {
                 {profile.name}
 
                 <Tooltip title={t('label.changeLanguage')}>
-                    <Button type="link" onClick={() => setModalLanguageVisible(true)}><img width={20} src={`flags/${localStorage.getItem('language')}.png`} /></Button>
+                    <Button type="link" onClick={() => setModalLanguageVisible(true)}><img alt="flag" width={20} src={`flags/${localStorage.getItem('language')}.png`} /></Button>
                 </Tooltip>
 
                 <Button icon="logout" style={{ marginLeft: 10 }} onClick={() => handleLogout()} size="small" type="danger">{t('button.signout')}</Button>

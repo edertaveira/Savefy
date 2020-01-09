@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Icon, Input, Button, Card, Row, Col, Spin, Typography, Tooltip, Divider, List, Empty, Comment, Alert, Badge } from 'antd';
+import { Button, Card, Row, Col, Spin, Typography, Tooltip, List, Empty, Comment, Alert, Badge } from 'antd';
 import { useSelector } from 'react-redux';
-import TextArea from 'antd/lib/input/TextArea';
-import { useFirestore, useFirestoreConnect, isLoaded } from 'react-redux-firebase'
-import { Link, useLocation } from "react-router-dom";
+import { useFirestore, useFirestoreConnect } from 'react-redux-firebase'
+import { useLocation } from "react-router-dom";
 import queryString from 'query-string';
 import momentPTBR from '../constants/momentPTBR';
 import moment from 'moment';
@@ -12,16 +11,13 @@ import ModalRastrear from './ModalRastrear';
 import ModalTestemunho from './ModalTestemunho';
 import Logo from '../common/Logo';
 import { useTranslation, Trans } from 'react-i18next';
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 
 function Intencao(props) {
-    const firestore = useFirestore();
     const location = useLocation();
-    const [iconLoading, setIconLoading] = useState(false);
     const [visible, setVisible] = useState(false);
     const [visibleTestemunho, setVisibleTestemunho] = useState(false);
-    const [elem, setElem] = useState({});
     const { t, i18n } = useTranslation();
 
     const parsed = queryString.parse(location.search);
@@ -31,6 +27,7 @@ function Intencao(props) {
     useEffect(() => {
         if (localStorage.getItem('language') !== 'en') {
             moment.locale(localStorage.getItem('language'), momentPTBR);
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             i18n.changeLanguage(localStorage.getItem('language'));
         } else {
             moment.locale('en');
@@ -99,7 +96,7 @@ function Intencao(props) {
                                 <p>{intencoes[0].testemunho.content}</p>
                                 <small>{moment(intencoes[0].testemunho.createdAt).fromNow()}</small>
                             </Card>
-                        : <div style={{ textAlign: 'center' }}><Button onClick={() => abrirModalTestemunho()} ><FaCross /> {t('label.addtestimonial')}</Button></div>}
+                            : <div style={{ textAlign: 'center' }}><Button onClick={() => abrirModalTestemunho()} ><FaCross /> {t('label.addtestimonial')}</Button></div>}
 
                         {<List
                             className="comment-list"

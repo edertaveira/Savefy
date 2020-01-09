@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import logo from '../logo.svg'
-import { Form, Icon, Input, Button, Checkbox, Row, Col, message } from 'antd';
-import { Link, useLocation } from "react-router-dom";
-import { useFirebase, useFirestoreConnect, isLoaded } from 'react-redux-firebase'
+import React, { useState } from 'react';
+import { Form, Input, Button, Row, Col, message } from 'antd';
+import { Link } from "react-router-dom";
+import { useFirebase } from 'react-redux-firebase'
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 
 function RegisterForm(props) {
     const { getFieldDecorator } = props.form;
     const [iconLoading, setIconLoading] = useState(false);
-    const [confirmDirty, setConfirmDirty] = useState(false);
+    const [confirmDirty] = useState(false);
     const firebase = useFirebase();
 
     const handleSubmit = e => {
