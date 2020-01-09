@@ -33,10 +33,10 @@ class Root extends React.Component {
                         loader: () => import('./components/Intencao'),
                         loading: PageLoading
                     })} />
-                    <Route exact path={routeNames.REGISTER} component={Loadable({
+                    {/* <Route exact path={routeNames.REGISTER} component={Loadable({
                         loader: () => import('./components/Register'),
                         loading: PageLoading
-                    })} />
+                    })} /> */}
                     <PrivateRoute exact path={routeNames.INTENCOES} >
                         {import('./components/Intencoes')}
                     </PrivateRoute>
