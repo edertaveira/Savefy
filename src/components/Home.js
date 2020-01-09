@@ -63,7 +63,6 @@ function HomeForm(props) {
                 const code = shortid.generate();
                 const lngDetector = new LanguageDetect();
                 const languages = lngDetector.detect(values.content);
-                console.log(languages[0]);
 
                 firestore.add('intencoes', {
                     ...values,
