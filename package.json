@@ -14,6 +14,7 @@
     "i18next": "^19.0.3",
     "i18next-xhr-backend": "^3.2.2",
     "iplocation": "^6.1.0",
+    "languagedetect": "^2.0.0",
     "moment": "^2.24.0",
     "public-ip": "^4.0.0",
     "query-string": "^6.9.0",

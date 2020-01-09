@@ -14,6 +14,7 @@ import { useTranslation, Trans } from 'react-i18next'
 import Logo from '../common/Logo';
 import ModalLanguage from './ModalLanguage';
 import detectBrowserLanguage from 'detect-browser-language'
+import LanguageDetect from 'languagedetect';
 
 
 const { TabPane } = Tabs;
@@ -26,8 +27,7 @@ function HomeForm(props) {
     const [modalLanguageVisible, setModalLanguageVisible] = useState(false);
     const [lastRecordedAt, setLastRecordedAt] = useState(null);
     const [visible, setVisible] = useState(false);
-    const { t, i18n } = useTranslation()
-
+    const { t, i18n } = useTranslation();
     const { getFieldDecorator } = props.form;
 
     const configureLastRecorded = (recording = false) => {
@@ -47,7 +47,11 @@ function HomeForm(props) {
             i18n.changeLanguage(detectBrowserLanguage().toLowerCase());
             localStorage.setItem('language', detectBrowserLanguage().toLowerCase());
         }
-    }, [])
+    }, []);
+
+    const keywords = [
+        'suicide', 'suicidio',
+    ]
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -56,6 +60,8 @@ function HomeForm(props) {
                 const ip = await publicIp.v4();
                 const ipLocation = await iplocation(ip);
                 const code = shortid.generate();
+                const lngDetector = new LanguageDetect();
+                const languages = lngDetector.detect(values.content);
 
                 firestore.add('intencoes', {
                     ...values,
@@ -64,7 +70,8 @@ function HomeForm(props) {
                     ip,
                     ...ipLocation,
                     oracoes: [],
-                    comentarios: []
+                    comentarios: [],
+                    language: (languages && languages[0]) ? languages[0][0] : null
                 }).then((data) => {
                     configureLastRecorded(true);
                     setIconLoading(false);

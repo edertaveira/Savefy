@@ -15,3 +15,11 @@ The technology used is react.
 ### Contributing
 
 If you want contribuite with this project, please contact @edertaveira requesting.
+
+### Next Steps
+- Intentions Paginations;
+- Translating to Italian and Spanish;
+- Putting Filter in the Amin area;
+- Configuration page to Intercessor (Set to receibe only from his languague/locale for example); 
+- Allow the messages with Audio;
+
