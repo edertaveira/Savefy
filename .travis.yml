@@ -1,13 +1,14 @@
 language: node_js
 node_js:
-    - "stable"
-cache:
-    directories:
-    - node_modules
+  - "node"
+warnings_are_errors: false
+install:
+  - npm install
 script:
-    - npm install
-    - npm run build
-install: 
-    - npm install -g firebase-tools
-after_success: 
-    - firebase deploy --token $FIREBASE_TOKEN
+  - echo {\"projects\": {\"default\": \"anjobom-10d2b\"}} > .firebaserc
+  - npm run build
+deploy:
+  provider: firebase
+  skip_cleanup: true
+  token:
+    secure: "vLVjOABzIkoXsbFh57fRFytd04/P/Qy03ethyvps/lmmzpMFI0ZOOID7W2mNf8PCGLBYSPCuCxiTmJEnAWaPhcC+ap4aXmHD8lfItudSC1WroDcrArY/rtwIC57+ZaLbiIN3p54AVqPt69jq8mVoSzoQJF2hGR7BFh5rmrZ4fyryetB9UFWoFxpBADhEAFm0iwlWPg35X1IZ4KGSe6bl4eecZMYtwa3jEWwTSrByBFDti3nOznDdJe579jXqjE+1lUDXOwGhziIMDwLieWof2dXE+Ut0ZTFtALG9gEUHftMXElpaXPXxXtV8y8gI+Rj9OQHSmS1HZoKK6FWlKJ7yQltxr3FdwryTQYkvlzQ+/vxI0QthJMDff/MdZx0o6tEHDihcpzkPXf9EEPbXLdjaLHqNIvr9tOcqzacUaQSjstui+lWoiTpN5NtITw0btxOucnA/YSNMlGd7lLkPhcl5VFLzSmV9tfPEUUgIKjLR14ocaiNDPwUsgnMNzv/07dYlNcW414EalHqNSh+5fKeyPClbITTvCQsXQOkT69zwISTXAv2uEvTad20oSjYfsrHLrwpR0HG+bI2un+nWQFwbMCl9ODY39Dv5FY70mQPsOVS2qem8Iy5WkZxQiGYOGbp4E3IvM/Cd0W9doJHEkI4wQ+sm2VzHo+SajRNDGAVAWEY="
