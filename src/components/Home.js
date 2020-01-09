@@ -139,7 +139,7 @@ function HomeForm(props) {
                     </TabPane>
                     <TabPane tab={t('tab.about')} key="2">
                         <Trans i18nKey='tab.about.description'>
-                            Intercede4.us é uma iniciativa sem fins lucrativos para ajudar pessoas que sentem necessidade de pedir orações por um problema sério que esteja passando. Pensamentos ruins, de suicídio, problemas nas quais aparentemente não há solução, Deus pode intervir e uma palavra, uma oração, pode salvar uma vida.
+                            Savefy é uma iniciativa sem fins lucrativos para ajudar pessoas que sentem necessidade de pedir orações por um problema sério que esteja passando. Pensamentos ruins, de suicídio, problemas nas quais aparentemente não há solução, Deus pode intervir e uma palavra, uma oração, pode salvar uma vida.
                             <h2 style={{ marginTop: 10 }}>Como funciona?</h2>
                             O usuário preenche sua intenção (sem necessidade de identificar-se) e clica no botão de enviar, será gerado um código único para a oração e todos os intercessores cadastrados na plataforma irão receber esta intenção podendo clicar em 'Interceder' e enviar mensagens, tudo isso podendo ser acompanhado pelo usuário através do código gerado.
                             O usuário através do mesmo código, pode também colocar mais tarde um testemunho, frutificando outras pessoas. Tais testemunhos são publicados aqui e nas redes sociais.
@@ -158,7 +158,7 @@ function HomeForm(props) {
                         <img alt="" border="0" src="https://www.paypal.com/en_BR/i/scr/pixel.gif" width="1" height="1" />
                     </form>
                     <br /><br /><br />
-                    <div><span style={{ fontFamily: `'Pacifico', cursive` }}>intercede4.us</span> <FaCopyright style={{ margin: '-2px 9px' }} /> 2020</div>
+                    <div><span style={{ fontFamily: `'Pacifico', cursive` }}>savefy</span> <FaCopyright style={{ margin: '-2px 9px' }} /> 2020</div>
                 </div>
                 <ModalRastrear visible={visible} setVisible={setVisible} />
                 <ModalLanguage visible={modalLanguageVisible} setVisible={setModalLanguageVisible} />
