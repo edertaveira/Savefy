@@ -27,8 +27,7 @@ function HomeForm(props) {
     const [modalLanguageVisible, setModalLanguageVisible] = useState(false);
     const [lastRecordedAt, setLastRecordedAt] = useState(null);
     const [visible, setVisible] = useState(false);
-    const { t, i18n } = useTranslation()
-    localStorage.setItem('lastRecordedAt', null);
+    const { t, i18n } = useTranslation();
     const { getFieldDecorator } = props.form;
 
     const configureLastRecorded = (recording = false) => {
