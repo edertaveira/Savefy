@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import logo from '../logo.svg'
-import { Form, Icon, Input, Button, Checkbox, Row, Col, message, Typography, Divider } from 'antd';
-import { Link, useLocation, useHistory } from "react-router-dom";
+import { Form, Icon, Input, Button, Row, Col, message, Typography } from 'antd';
+import { useHistory } from "react-router-dom";
 import { useFirebase, isEmpty, isLoaded } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import routeNames from '../constants/routeNames';
-import { FaChurch } from 'react-icons/fa';
-import { useTranslation, Trans } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import Logo from '../common/Logo';
 
 const { Title } = Typography;
@@ -17,7 +16,7 @@ function LoginForm(props) {
     const history = useHistory();
     const firebase = useFirebase();
     const auth = useSelector(state => state.firebase && state.firebase.auth)
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const handleSubmit = e => {
         e.preventDefault();

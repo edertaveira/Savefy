@@ -5,10 +5,11 @@ warnings_are_errors: false
 install:
   - npm install
 script:
-  - echo {\"projects\": {\"default\": \"$FIREBASE_PROJECT\"}} > .firebaserc
   - npm run build
 deploy:
   provider: firebase
   skip_cleanup: true
   token:
     secure: $FIREBASE_TOKEN
+  on:
+    branch: master
