@@ -1,0 +1,1 @@
+echo {\"projects\": {\"default\": \"$FIREBASE_PROJECT\"}} > ../.firebaserc

@@ -2,6 +2,8 @@ language: node_js
 node_js:
 - node
 warnings_are_errors: false
+before_install:
+- bash script/deploy.sh
 install:
 - npm install
 - npm install -g firebase-tools
