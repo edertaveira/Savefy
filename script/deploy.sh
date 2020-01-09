@@ -1,1 +1,1 @@
-echo {\"projects\": {\"default\": \"$FIREBASE_PROJECT\"}} > ../.firebaserc
+echo {\"projects\": {\"default\": \"$FIREBASE_PROJECT\"}} > .firebaserc
