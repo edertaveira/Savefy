@@ -24,7 +24,7 @@ function PrivateRoute({ children, ...rest }) {
         return (
             <Layout>
                 <Header style={{ position: 'fixed', zIndex: 1, width: '100%', background: '#fff' }}>
-                    <Button type="link" style={logoStyle}>sos<span style={{ color: '#333' }}>pray</span></Button>
+                    <Button type="link" style={logoStyle}>savefy</Button>
                     <MenuBar />
                     {/* <Avatar style={{ backgroundColor: user.color }}>{firstLetters}</Avatar> <b>{user && user.nome}</b> */}
                 </Header>
@@ -33,7 +33,7 @@ function PrivateRoute({ children, ...rest }) {
                         <AsyncFunc />
                     </div>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}><span style={{ fontFamily: `'Pacifico', cursive` }}>sospray</span> <FaCopyright style={{ margin: '-2px 9px' }} /> 2020</Footer>
+                <Footer style={{ textAlign: 'center' }}><span style={{ fontFamily: `'Pacifico', cursive` }}>savefy</span> <FaCopyright style={{ margin: '-2px 9px' }} /> 2020</Footer>
             </Layout>
         );
     }
