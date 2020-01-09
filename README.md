@@ -1,9 +1,9 @@
 
-![](https://travis-ci.com/edertaveira/intercede4.us.svg?branch=master)
+![](https://travis-ci.com/edertaveira/intercede4.us.svg?branch=master) [![CodeFactor](https://www.codefactor.io/repository/github/edertaveira/savefy/badge)](https://www.codefactor.io/repository/github/edertaveira/savefy)
 
 ### Introduction
 
-This is a non-financial project. We are a platform to help people share their problems and someone will pray for then, sending some messages.
+This is a project that aim first prevent suicide and to help people share their problems and someone will pray for then, sending some messages.
 
 The technology used is react.
 
