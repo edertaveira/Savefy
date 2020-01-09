@@ -33,7 +33,7 @@ function PrivateRoute({ children, ...rest }) {
                         <AsyncFunc />
                     </div>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}><span style={{ fontFamily: `'Pacifico', cursive` }}>intercede4.us</span> <FaCopyright style={{ margin: '-2px 9px' }} /> 2020</Footer>
+                <Footer style={{ textAlign: 'center' }}><span style={{ fontFamily: `'Pacifico', cursive` }}>sospray</span> <FaCopyright style={{ margin: '-2px 9px' }} /> 2020</Footer>
             </Layout>
         );
     }
