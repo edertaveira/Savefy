@@ -7,6 +7,9 @@ import 'antd/dist/antd.css';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import { store, rrfProps } from './firebase-config';
+import * as Sentry from '@sentry/browser';
+
+Sentry.init({ dsn: process.env.REACT_APP_SENTRY });
 
 ReactDOM.render(
     <Provider store={store}>

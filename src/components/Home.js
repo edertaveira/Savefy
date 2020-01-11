@@ -27,8 +27,7 @@ function HomeForm(props) {
     const [modalLanguageVisible, setModalLanguageVisible] = useState(false);
     const [lastRecordedAt, setLastRecordedAt] = useState(null);
     const [visible, setVisible] = useState(false);
-    const { t, i18n } = useTranslation()
-
+    const { t, i18n } = useTranslation();
     const { getFieldDecorator } = props.form;
 
     const configureLastRecorded = (recording = false) => {
@@ -72,7 +71,7 @@ function HomeForm(props) {
                     ...ipLocation,
                     oracoes: [],
                     comentarios: [],
-                    language: languages[0]
+                    language: (languages && languages[0]) ? languages[0][0] : null
                 }).then((data) => {
                     configureLastRecorded(true);
                     setIconLoading(false);
