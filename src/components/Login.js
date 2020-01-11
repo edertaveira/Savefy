@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import logo from '../logo.svg'
 import { Form, Icon, Input, Button, Row, Col, message, Typography } from 'antd';
 import { useHistory } from "react-router-dom";
 import { useFirebase, isEmpty, isLoaded } from 'react-redux-firebase';
@@ -7,8 +6,6 @@ import { useSelector } from 'react-redux';
 import routeNames from '../constants/routeNames';
 import { useTranslation } from 'react-i18next'
 import Logo from '../common/Logo';
-
-const { Title } = Typography;
 
 function LoginForm(props) {
     const { getFieldDecorator } = props.form;

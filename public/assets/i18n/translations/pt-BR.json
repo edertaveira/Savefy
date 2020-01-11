@@ -28,6 +28,8 @@
     "msg.testimonialrequired": "Por favor, preencha seu testemunho.",
     "msg.message.success": "Mensagem Enviada",
     "msg.testimonial.success": "Testimonial Enviado",
+    "msg.install": "Instalar como App",
+    "msg.loading.intention": "Carregando Intenções...",
     "label.send": "Enviar",
     "msg.messagerequired": "Por favor, coloque sua mensagem.",
     "msg.message.placeholder": "Coloque aqui o que o Senhor te revelou, uma palavra de ciência ou sabedoria, uma passagem, um conselho.",
