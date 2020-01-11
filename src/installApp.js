@@ -7,7 +7,6 @@ function InstallApp(props) {
     const [installButton, setInstallButton] = useState(false);
     const [deferredPrompt, setDeferredPrompt] = useState(true);
     const { t, i18n } = useTranslation();
-    let deferredPrompt;
 
     useEffect(() => {
         window.addEventListener('beforeinstallprompt', (e) => {
