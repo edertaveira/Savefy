@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Radio, Modal } from 'antd';
-import { useSelector } from 'react-redux';
-import { useFirebase } from 'react-redux-firebase'
-import moment from 'moment';
-import momentPTBR from '../constants/momentPTBR';
 import { useTranslation } from 'react-i18next';
 
 const ModalLanguage = Form.create({ name: 'language' })(function LanguageForm(props) {
@@ -29,7 +25,6 @@ const ModalLanguage = Form.create({ name: 'language' })(function LanguageForm(pr
     }
 
     useEffect(() => {
-        console.log(localStorage.getItem('language'));
         props.form.setFieldsValue({ language: localStorage.getItem('language') })
     }, [])
 

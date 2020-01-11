@@ -91,7 +91,7 @@ function Intencoes() {
                 <br /><br />
             </Offline>
             <Online>
-                <Spin spinning={!intencoes} tip="Carregando Intenções...">
+                <Spin spinning={!intencoes} tip={t('msg.loading.intention')}>
                     <Row gutter={16}>
                         <Col lg={6} md={6} sm={12} xs={12}>
                             <Statistic title={t('label.intentions')} value={getTotal().intencoesTotal} />

@@ -1,25 +1,18 @@
 import React, { Suspense } from 'react';
 import PageLoading from './common/PageLoading';
-import { Layout, Menu, Icon, Avatar, Button } from 'antd';
 import Loadable from 'react-loadable';
 import routeNames from './constants/routeNames';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import PrivateRoute from './common/PrivateRoute';
-import './i18n'
+import './i18n';
+import InstallApp from './installApp';
 
 class Root extends React.Component {
-
-
-
 
     render() {
         return (
             <Suspense fallback={null}>
+                <InstallApp />
                 <Router>
                     <Route exact path={routeNames.LOGIN} component={Loadable({
                         loader: () => import('./components/Login'),

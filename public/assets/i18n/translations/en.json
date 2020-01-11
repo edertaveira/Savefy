@@ -25,6 +25,8 @@
     "msg.intention.placeholder": "Put here your prayer intention. Some good angel will pray for you.",
     "msg.intention.success": "Sent successful! God bless your life.",
     "msg.intention.required": "The Prayer intention is required.",
+    "msg.install": "Install as App",
+    "msg.loading.intention": "Loading Intentions...",
     "label.send": "Send",
     "msg.messagerequired": "The Message is required.",
     "msg.testimonialrequired": "The Testimonial is required.",
