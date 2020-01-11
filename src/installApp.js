@@ -11,7 +11,7 @@ function InstallApp(props) {
     useEffect(() => {
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
-            setDeferredPrompt(e);
+            if (localStorage.getItem('addToHome')) setDeferredPrompt(e);
             setInstallButton(true);
         });
     }, []);
@@ -26,6 +26,7 @@ function InstallApp(props) {
                 console.log('User dismissed the A2HS prompt');
             }
             deferredPrompt = null;
+            localStorage.setItem('addToHome', true);
         });
     }
 
