@@ -57,6 +57,7 @@ function HomeForm(props) {
         e.preventDefault();
         props.form.validateFields(async (err, values) => {
             if (!err) {
+                setIconLoading(true);
                 const ip = await publicIp.v4();
                 const ipLocation = await iplocation(ip);
                 const code = shortid.generate();
@@ -74,11 +75,14 @@ function HomeForm(props) {
                     language: (languages && languages[0]) ? languages[0][0] : null
                 }).then((data) => {
                     configureLastRecorded(true);
-                    setIconLoading(false);
                     props.form.resetFields();
                     message.success(t('msg.intention.success'));
                     history.push(`/intencao?code=${code}`);
-                });
+                }).catch(error => {
+                    message.error(t('msg.error.general'));
+                }).finally(() => {
+                    setIconLoading(false);
+                })
 
 
             }

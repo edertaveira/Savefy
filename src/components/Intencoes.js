@@ -87,7 +87,7 @@ function Intencoes() {
     return (
         <>
             <Offline>
-                <Alert type="warning" message={t('msg.info.networfail')} />
+                <Alert type="warning" message={t('msg.info.networkfail')} />
                 <br /><br />
             </Offline>
             <Online>

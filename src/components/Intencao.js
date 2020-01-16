@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Card, Row, Col, Spin, Typography, Tooltip, List, Empty, Comment, Alert, Badge } from 'antd';
+import { Offline, Online,  } from "react-detect-offline";
 import { useSelector } from 'react-redux';
 import { useFirestore, useFirestoreConnect } from 'react-redux-firebase'
 import { useLocation } from "react-router-dom";
@@ -62,68 +63,73 @@ function Intencao(props) {
         <Row type="flex" justify="center" align="top">
             <Col lg={18} md={18} sm={20} xs={20}>
                 <Logo />
+                <Offline>
+                    <Alert type="warning" message={t('msg.info.networkfail')} />
+                    <br /><br />
+                </Offline>
 
+                <Online>
+                    <Spin spinning={!intencoes} tip={t('msg.searching')}>
+                        {intencoes && intencoes.length > 0 && <>
+                            <Text> {t('text.intention')} </Text>
+                            <br />
+                            <Text strong>{t('text.godbless')} </Text>
+                            <br />
+                            <br />
 
-                <Spin spinning={!intencoes} tip={t('msg.searching')}>
-                    {intencoes && intencoes.length > 0 && <>
-                        <Text> {t('text.intention')} </Text>
-                        <br />
-                        <Text strong>{t('text.godbless')} </Text>
-                        <br />
-                        <br />
+                            <Alert type="info" message={t('text.saveyourcode')} />
 
-                        <Alert type="info" message={t('text.saveyourcode')} />
+                            <Row gutter={16}>
+                                <Col lg={12} md={12} sm={12} xs={24}>
+                                    <br />
+                                    <Card title={t('label.prayercode')}>
+                                        <Text copyable>{intencoes[0].code}</Text>
+                                    </Card>
+                                </Col>
+                                <Col lg={12} md={12} sm={12} xs={24}>
+                                    <br />
+                                    <Card title={t('label.numberprayer')} >
+                                        <FaPray size="16" />
+                                        <Badge count={intencoes[0].oracoes.length} />
+                                    </Card>
+                                </Col>
+                            </Row>
 
-                        <Row gutter={16}>
-                            <Col lg={12} md={12} sm={12} xs={24}>
-                                <br />
-                                <Card title={t('label.prayercode')}>
-                                    <Text copyable>{intencoes[0].code}</Text>
+                            <br />
+                            {intencoes[0].testemunho
+                                ? <Card title={<span><FaCross /> {t('label.testimonial')}</span>}>
+                                    <p>{intencoes[0].testemunho.content}</p>
+                                    <small>{moment(intencoes[0].testemunho.createdAt).fromNow()}</small>
                                 </Card>
-                            </Col>
-                            <Col lg={12} md={12} sm={12} xs={24}>
-                                <br />
-                                <Card title={t('label.numberprayer')} >
-                                    <FaPray size="16" />
-                                    <Badge count={intencoes[0].oracoes.length} />
-                                </Card>
-                            </Col>
-                        </Row>
+                                : <div style={{ textAlign: 'center' }}><Button onClick={() => abrirModalTestemunho()} ><FaCross /> {t('label.addtestimonial')}</Button></div>}
 
-                        <br />
-                        {intencoes[0].testemunho
-                            ? <Card title={<span><FaCross /> {t('label.testimonial')}</span>}>
-                                <p>{intencoes[0].testemunho.content}</p>
-                                <small>{moment(intencoes[0].testemunho.createdAt).fromNow()}</small>
-                            </Card>
-                            : <div style={{ textAlign: 'center' }}><Button onClick={() => abrirModalTestemunho()} ><FaCross /> {t('label.addtestimonial')}</Button></div>}
-
-                        {<List
-                            className="comment-list"
-                            header={`${getComentarios().length} ${t('label.messages')}`}
-                            itemLayout="horizontal"
-                            dataSource={getComentarios()}
-                            locale={{
-                                emptyText: <Empty description={t('msg.nomessages')} />
-                            }}
-                            renderItem={item => (
-                                <li>
-                                    <Comment
-                                        author={item.author}
-                                        content={item.content}
-                                        datetime={item.datetime}
-                                    />
-                                </li>
-                            )}
-                        />}
-                    </>}
-                    {intencoes && intencoes.length === 0 && <div style={{ textAlign: 'center' }}>
-                        <br /><br />
-                        <Alert type="warning" message={`${t('msg.messagerequired')} ${parsed.code}`} />
-                        <br /><br />
-                        <Button onClick={() => abrirModalRastrarIntencao()} style={{ color: '#a25050' }} type="link"><FaPray /> Rastrear outra Intenção</Button>
-                    </div>}
-                </Spin>
+                            {<List
+                                className="comment-list"
+                                header={`${getComentarios().length} ${t('label.messages')}`}
+                                itemLayout="horizontal"
+                                dataSource={getComentarios()}
+                                locale={{
+                                    emptyText: <Empty description={t('msg.nomessages')} />
+                                }}
+                                renderItem={item => (
+                                    <li>
+                                        <Comment
+                                            author={item.author}
+                                            content={item.content}
+                                            datetime={item.datetime}
+                                        />
+                                    </li>
+                                )}
+                            />}
+                        </>}
+                        {intencoes && intencoes.length === 0 && <div style={{ textAlign: 'center' }}>
+                            <br /><br />
+                            <Alert type="warning" message={`${t('msg.msg.info.nointentions')} - ${parsed.code}`} />
+                            <br /><br />
+                            <Button onClick={() => abrirModalRastrarIntencao()} style={{ color: '#a25050' }} type="link"><FaPray /> Rastrear outra Intenção</Button>
+                        </div>}
+                    </Spin>
+                </Online>
                 <ModalRastrear visible={visible} setVisible={setVisible} />
                 <ModalTestemunho visible={visibleTestemunho} intencao={intencoes && intencoes[0]} setVisible={setVisibleTestemunho} />
             </Col>
