@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, List, Tooltip, Col, Row, Badge, Spin, Statistic, Button, Alert, Empty, Divider, Modal } from 'antd';
+import { Card, List, Tooltip, Col, Row, Badge, Spin, Statistic, Button, Alert, Empty, Divider, Modal, Input, Typography, Popover, Radio } from 'antd';
 import { Offline, Online } from "react-detect-offline";
 //import ExtraLinks from '../common/ExtraLinks';
 import { useSelector } from 'react-redux'
@@ -10,13 +10,19 @@ import { FaPray, FaPen, FaCross } from 'react-icons/fa';
 import ModalComentario from './ModalComentario';
 import { useTranslation } from 'react-i18next'
 
+const { Search } = Input;
+const { Paragraph } = Typography;
 
 function Intencoes() {
 
     const [comentarios, setComentarios] = useState([]);
     const [intencao, setIntencao] = useState({});
+    const [result, setResult] = useState([]);
     const [visible, setVisible] = useState(false);
     const [visibleTestemunho, setVisibleTestemunho] = useState(false);
+    const [loadingSearch, setLoadingSearch] = useState(false);
+    const [search, setSearch] = useState('');
+    const [filter, setFilter] = useState('all');
     const [testemunho, setTestemunho] = useState({});
     const { t, i18n } = useTranslation();
 
@@ -35,6 +41,25 @@ function Intencoes() {
             moment.locale('en');
         }
     }, []);
+
+
+    useEffect(() => {
+        console.log('getting result...');
+        let result = intencoes;
+        const keywords = ['suicide', 'suicídio', 'suicidio', 'suicidar', 'matar', 'kill', 'morrer', 'aborto', 'abortion']
+        switch (filter) {
+            case 'urgent':
+                result = intencoes.filter(item => keywords.some(word => item.content.includes(word)));
+                break;
+            case 'prayed':
+                result = intencoes.filter(item => item.oracoes && item.oracoes.find(value => value === auth.uid));
+                break;
+            default:
+                break;
+        }
+        setResult(search === '' ? result: result.filter(item => item.content.includes(search)));
+        
+    }, [intencoes, filter, search])
 
     const auth = useSelector(state => state.firebase.auth);
 
@@ -83,6 +108,14 @@ function Intencoes() {
         };
     }
 
+    const onSearch = ({ target: { value } }) => {
+        setSearch(value);
+    }
+
+    const onFilter = (e) => {
+        console.log(e);
+        setFilter(e.target.value);
+    }
 
     return (
         <>
@@ -91,6 +124,7 @@ function Intencoes() {
                 <br /><br />
             </Offline>
             <Online>
+
                 <Spin spinning={!intencoes} tip={t('msg.loading.intention')}>
                     <Row gutter={16}>
                         <Col lg={6} md={6} sm={12} xs={12}>
@@ -106,14 +140,27 @@ function Intencoes() {
                             <Statistic title={t('label.testimonials')} value={getTotal().testemunhosTotal} />
                         </Col>
                     </Row>
-                    <br />
-                    <Divider />
-                    <br />
-
+                </Spin>
+                <br />
+                <Divider />
+                <Row>
+                    <Col lg={10} md={10} sm={12} xs={24}>
+                        <Search placeholder={t('label.search')} style={{ margin: '5px' }} size="small" onChange={onSearch} loading={loadingSearch} />
+                    </Col>
+                    <Col lg={6} md={6} sm={12} xs={24}>
+                        <Radio.Group style={{ margin: '5px' }} defaultValue="all" size="small" onChange={onFilter}>
+                            <Radio.Button value="all">{t('label.all')}</Radio.Button>
+                            <Radio.Button value="urgent">{t('label.urgent')}</Radio.Button>
+                            <Radio.Button value="prayed">{t('label.prayed')}</Radio.Button>
+                        </Radio.Group>
+                    </Col>
+                </Row>
+                <br />
+                <Spin spinning={!intencoes} tip={t('msg.loading.intention')}>
                     <List
                         grid={{
                             gutter: 16,
-                            xs: 1,
+                            xs: 2,
                             sm: 2,
                             md: 3,
                             lg: 3,
@@ -123,7 +170,7 @@ function Intencoes() {
                         locale={{
                             emptyText: <Empty description={t('msg.info.nointentions')} />
                         }}
-                        dataSource={intencoes}
+                        dataSource={result}
                         renderItem={intencao => {
                             const rezou = intencao.oracoes && intencao.oracoes.find(value => value === auth.uid)
 
@@ -147,9 +194,11 @@ function Intencoes() {
                                         </Button>
                                     </Tooltip>,
                                 ]}>
-                                    <p>{intencao.content}</p>
-                                    <p style={{ color: '#666666' }}>{intencao.city}-{intencao.regionCode}, {intencao.country}</p>
-                                    <small>{moment(intencao.createdAt.toDate()).fromNow()}</small>
+                                    <Popover content={intencao.content} title={`${intencao.city}-${intencao.regionCode}`}>
+                                        <Paragraph ellipsis={{ rows: 1 }}>{intencao.content}</Paragraph>
+                                        <p style={{ color: '#666666' }}>{intencao.city}-{intencao.regionCode}, {intencao.country}</p>
+                                        <small>{moment(intencao.createdAt.toDate()).fromNow()}</small>
+                                    </Popover>
                                 </Card>
                             </List.Item>
                         }}
