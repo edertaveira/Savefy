@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Form,  Button, Tooltip, Row, Col, Divider, Tabs, message, Statistic } from 'antd';
+import { Form, Button, Tooltip, Row, Col, Divider, Tabs, message, Statistic } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { useFirestore } from 'react-redux-firebase'
 import { Link, useHistory } from "react-router-dom";
@@ -15,7 +15,7 @@ import Logo from '../common/Logo';
 import ModalLanguage from './ModalLanguage';
 import detectBrowserLanguage from 'detect-browser-language'
 import LanguageDetect from 'languagedetect';
-
+import { ReactMic } from 'react-mic';
 
 const { TabPane } = Tabs;
 const { Countdown } = Statistic;
@@ -26,6 +26,7 @@ function HomeForm(props) {
     const [iconLoading, setIconLoading] = useState(false);
     const [modalLanguageVisible, setModalLanguageVisible] = useState(false);
     const [lastRecordedAt, setLastRecordedAt] = useState(null);
+    const [record, setRecord] = useState(false);
     const [visible, setVisible] = useState(false);
     const { t, i18n } = useTranslation();
     const { getFieldDecorator } = props.form;
@@ -107,6 +108,22 @@ function HomeForm(props) {
         </Tooltip>
     </>);
 
+    const startRecording = () => {
+        setRecord(true);
+    }
+
+    const stopRecording = () => {
+        setRecord(false);
+    }
+
+    const onData = (recordedBlob) => {
+        console.log('chunk of real-time data is: ', recordedBlob);
+    }
+
+    const onStop = (recordedBlob) => {
+        console.log('recordedBlob is: ', recordedBlob);
+    }
+
 
     const form = () => {
         return (<Form onSubmit={handleSubmit} className="login-form">
@@ -122,6 +139,15 @@ function HomeForm(props) {
                         placeholder={t('msg.intention.placeholder')}
                     />,
                 )}
+                {/* <ReactMic
+                    record={record}
+                    className="sound-wave"
+                    onStop={onStop}
+                    onData={onData}
+                    strokeColor="#000000"
+                    backgroundColor="#FFFFFF" />
+                <Button onClick={startRecording} type="button">Start</Button> */}
+                
             </Form.Item>
             <Form.Item style={{ textAlign: 'center' }}>
                 <Button
